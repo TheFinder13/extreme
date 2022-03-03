@@ -1,0 +1,22 @@
+
+
+
+<div class="row portfolio-container">
+    {% for i in category %}
+
+        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-1 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="portfolio-wrap">
+                <div class="portfolio-img">
+                    <img src="{{ asset('uploads/' ~ i.image) }}" alt="Image">
+                </div>
+                <div class="portfolio-text">
+                   <a href="{{ path('card_add',{'id': i.id}) }}"><h3>{{ i.nom }}</h3></a>
+                    <h3>{{ i.prix }}</h3>
+                    <h6>{{ i.description }}</h6>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+

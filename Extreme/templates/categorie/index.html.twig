@@ -1,0 +1,24 @@
+<table border="3">
+    <tr>
+    <th>image </th>
+    <th>nom </th>
+    <th>desc </th>
+    <th>modif </th>
+    <th>delete </th>
+    </tr>
+    {% for i in category %}
+    <tr>
+
+            <td> <img width="300" height="200" src=" {{ asset('uploads/' ~ i.image) }}"></td>
+
+            <td>{{ i.name }}</td>
+            <td>{{ i.Description }}</td>
+            <td><a href="{{ path('category',{'id':i.id}) }}">Modify</a></td>
+            <td><a href="{{ path('suppcategori',{'id':i.id}) }}">Delete</a></td>
+
+    </tr>
+    {% endfor %}
+</table>
+<a href="/ajout_categorie">ajout categorie</a><br>
+<a href="/ajout_scategorie">ajout sous categorie</a><br>
+<a href="/ajout_produit">ajout Produit</a>

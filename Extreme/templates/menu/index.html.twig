@@ -1,0 +1,12 @@
+
+<h3>{{ categorie.name }}</h3>
+<img  src=" {{ asset('uploads/' ~ categorie.image) }}" alt="Image">
+
+<h5>{{ categorie.description }}</h5>
+
+{% for i in produit %}
+    {{ i.nom }}
+    <img  src=" {{ asset('uploads/' ~ i.image) }}" alt="Image">
+
+
+{% endfor %}
