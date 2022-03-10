@@ -14,26 +14,31 @@ use Symfony\Component\Routing\Annotation\Route;
 class MenuController extends AbstractController
 {
     /**
-     * @Route("/menu", name="app_menu")
+     * @Route("/menu/{id}", name="app_menu")
      */
-    public function index(): Response
+    public function index($id): Response
     {
         $repository=$this->getdoctrine()->getrepository(SubCategory::class);
-        $category =$repository->findAll();
+        $category =$repository->find($id);
 
         return $this->render('menu/menu.html.twig',array(
 
             'category' =>$category));
 
-    }
-    /**
-     * @param Request $request
-     * @Route("/paniertest", name="paniertest")
+    }/**
+     * @Route("/premenu", name="premenu")
      */
-    public function panier(): Response
+    public function premenu(): Response
     {
-        return $this->render('panier/index.html.twig');
+        $repository=$this->getdoctrine()->getrepository(Category::class);
+        $category =$repository->findAll();
+
+        return $this->render('menu/premenu.html.twig',array(
+
+            'category' =>$category));
+
     }
+
     /**
      * @param Request $request
      * @Route("/panierteste", name="panierteste")

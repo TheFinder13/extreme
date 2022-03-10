@@ -35,7 +35,7 @@ class PanierController extends AbstractController
             $totalitem = $item['produit']->getPrix() * $item['quantity'];
             $total += $totalitem;
         }
-        return $this->render('panier/panier.html.twig', [
+        return $this->render('panier/index.html.twig', [
             'items' => $panierWithData,
             'total' => $total
         ]);
@@ -123,12 +123,23 @@ class PanierController extends AbstractController
         $commande->setPrixTot($prixTotalForCommand . "");
         $commande->setDate(new \DateTime());
         $commande->setQuantity($qte);
-        $commande->setProduct($product);
+        $commande->addProduit($product);
+
+        $email = (new Email())
+            ->from('azizabouda131@gmail.com')
+            ->To('hanine.benayed@esprit.tn')
+            ->subject('Il y a une nouvelle commande au extreme !')
+            ->html('check out ')
+            ->text($commande->getPrixTot());
+
         $em->persist($commande);
+        $mailer->send($email);
+
+        $session->clear();
         $em->flush();
 
 
-        return $this->render('panier/livraison.html.twig');
+        return $this->redirectToRoute('panier');
 
 
 

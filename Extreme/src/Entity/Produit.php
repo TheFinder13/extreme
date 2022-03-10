@@ -53,6 +53,16 @@ class Produit
      */
     private $SubCategory;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Commande::class, mappedBy="produit")
+     */
+    private $commandes;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+    }
+
 
     /**
      * @return mixed
@@ -136,6 +146,33 @@ class Produit
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection<int, Commande>
+     */
+    public function getCommandes(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            $commande->removeProduit($this);
+        }
 
         return $this;
     }

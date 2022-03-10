@@ -41,11 +41,17 @@ class Commande
      */
     private $Date;
 
-
     /**
-     * @ORM\ManyToMany(targetEntity=Produit::class, inversedBy="commande")
+     * @ORM\ManyToMany(targetEntity=Produit::class, inversedBy="commandes")
      */
-    private $Product;
+    private $produit;
+
+    public function __construct()
+    {
+        $this->produit = new ArrayCollection();
+    }
+
+
 
     /**
      * @return mixed
@@ -54,9 +60,6 @@ class Commande
     {
         return $this->id;
     }
-
-
-
     /**
      * @return mixed
      */
@@ -106,29 +109,26 @@ class Commande
     }
 
     /**
-     * @return mixed
+     * @return Collection<int, Produit>
      */
-    public function getProduct()
+    public function getProduit(): Collection
     {
-        return $this->Product;
+        return $this->produit;
     }
 
-    /**
-     * @param mixed $Product
-     */
-    public function setProduct($Product): void
+    public function addProduit(Produit $produit): self
     {
-        $this->Product = $Product;
+        if (!$this->produit->contains($produit)) {
+            $this->produit[] = $produit;
+        }
+
+        return $this;
     }
 
+    public function removeProduit(Produit $produit): self
+    {
+        $this->produit->removeElement($produit);
 
-
-
-
-
-
-
-
-
-
-}
+        return $this;
+    }
+    }
